@@ -4,6 +4,8 @@ import React from "react"
 
 import PlaceholderImage from "@modules/common/icons/placeholder-image"
 
+const FALLBACK_PRODUCT_IMAGE = "/assets/lang-wellness-catalog.png"
+
 type ThumbnailProps = {
   thumbnail?: string | null
   images?: { url?: string }[] | null
@@ -21,7 +23,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   className,
   "data-testid": dataTestid,
 }) => {
-  const initialImage = thumbnail || images?.[0]?.url
+  const initialImage = thumbnail || images?.[0]?.url || FALLBACK_PRODUCT_IMAGE
 
   return (
     <Container
@@ -52,7 +54,7 @@ const ImageOrPlaceholder = ({
   return image ? (
     <Image
       src={image}
-      alt="Thumbnail"
+      alt="Ảnh sản phẩm Lặng"
       className="absolute inset-0 object-cover object-center"
       draggable={false}
       quality={50}

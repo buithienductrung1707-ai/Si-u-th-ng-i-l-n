@@ -5,6 +5,12 @@ import { getRegion } from "@lib/data/regions"
 import ProductTemplate from "@modules/products/templates"
 import { HttpTypes } from "@medusajs/types"
 
+const FALLBACK_PRODUCT_IMAGE: HttpTypes.StoreProductImage = {
+  id: "lang-wellness-catalog",
+  rank: 0,
+  url: "/assets/lang-wellness-catalog.png",
+}
+
 type Props = {
   params: Promise<{ countryCode: string; handle: string }>
   searchParams: Promise<{ v_id?: string }>
@@ -15,16 +21,17 @@ function getImagesForVariant(
   selectedVariantId?: string
 ) {
   if (!selectedVariantId || !product.variants) {
-    return product.images
+    return product.images?.length ? product.images : [FALLBACK_PRODUCT_IMAGE]
   }
 
   const variant = product.variants!.find((v) => v.id === selectedVariantId)
   if (!variant || !variant.images?.length) {
-    return product.images
+    return product.images?.length ? product.images : [FALLBACK_PRODUCT_IMAGE]
   }
 
   const imageIdsMap = new Map(variant.images!.map((i) => [i.id, true]))
-  return product.images?.filter((i) => imageIdsMap.has(i.id)) ?? null
+  const images = product.images?.filter((i) => imageIdsMap.has(i.id))
+  return images?.length ? images : [FALLBACK_PRODUCT_IMAGE]
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
@@ -46,12 +53,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${product.title} | Medusa Store`,
-    description: `${product.title}`,
+    title: `${product.title} | Lặng`,
+    description: product.description ?? product.title,
     openGraph: {
-      title: `${product.title} | Medusa Store`,
-      description: `${product.title}`,
-      images: product.thumbnail ? [product.thumbnail] : [],
+      title: `${product.title} | Lặng`,
+      description: product.description ?? product.title,
+      images: [product.thumbnail ?? FALLBACK_PRODUCT_IMAGE.url],
     },
   }
 }
