@@ -2,6 +2,8 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
+import { getBaseURL } from "@lib/util/env"
+import { getProductPrice } from "@lib/util/get-product-price"
 import ProductTemplate from "@modules/products/templates"
 import { HttpTypes } from "@medusajs/types"
 
@@ -9,6 +11,45 @@ const FALLBACK_PRODUCT_IMAGE: HttpTypes.StoreProductImage = {
   id: "lang-wellness-catalog",
   rank: 0,
   url: "/assets/lang-wellness-catalog.png",
+}
+
+function createProductJsonLd(
+  product: HttpTypes.StoreProduct,
+  countryCode: string
+) {
+  const url = new URL(
+    `/${countryCode}/products/${product.handle}`,
+    getBaseURL()
+  ).toString()
+  const image = new URL(
+    product.thumbnail ?? FALLBACK_PRODUCT_IMAGE.url,
+    getBaseURL()
+  ).toString()
+  const price = getProductPrice({ product }).cheapestPrice
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.description ?? product.title,
+    image,
+    url,
+    sku: product.variants?.[0]?.sku ?? undefined,
+    brand: {
+      "@type": "Brand",
+      name: "Lặng Store",
+    },
+    ...(price
+      ? {
+          offers: {
+            "@type": "Offer",
+            price: price.calculated_price_number,
+            priceCurrency: price.currency_code.toUpperCase(),
+            url,
+          },
+        }
+      : {}),
+  }
 }
 
 type Props = {
@@ -84,13 +125,22 @@ export default async function ProductPage(props: Props) {
   }
 
   const images = getImagesForVariant(pricedProduct, selectedVariantId)
+  const productJsonLd = createProductJsonLd(pricedProduct, params.countryCode)
 
   return (
-    <ProductTemplate
-      product={pricedProduct}
-      region={region}
-      countryCode={params.countryCode}
-      images={images ?? []}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <ProductTemplate
+        product={pricedProduct}
+        region={region}
+        countryCode={params.countryCode}
+        images={images ?? []}
+      />
+    </>
   )
 }
