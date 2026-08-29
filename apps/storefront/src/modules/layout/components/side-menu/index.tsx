@@ -17,6 +17,7 @@ const SideMenuItems = {
   "Tài khoản": "/account",
   "Giỏ hàng": "/cart",
   "Giao hàng kín đáo": "/shipping",
+  "Đổi trả & an toàn": "/returns",
   "Chính sách riêng tư": "/privacy",
 }
 

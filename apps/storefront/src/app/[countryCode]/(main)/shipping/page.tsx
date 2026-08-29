@@ -38,9 +38,10 @@ export default function ShippingPage() {
         <section>
           <h2 className="text-xl font-semibold text-slate-950">Thanh toán</h2>
           <p className="mt-2">
-            MVP hỗ trợ COD và chuyển khoản thủ công. Các cổng thanh toán trực
-            tuyến chỉ được bật sau khi merchant và loại hình kinh doanh được xác
-            nhận.
+            Môi trường hiện tại chỉ dùng nhà cung cấp thanh toán hệ thống để
+            kiểm tra kỹ thuật và không nhận thanh toán thật. Các phương thức
+            thanh toán được phê duyệt sẽ hiển thị rõ tại checkout trước khi
+            cửa hàng chính thức mở bán.
           </p>
         </section>
       </div>

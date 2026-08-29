@@ -136,6 +136,14 @@ export default async function Footer() {
                 <li>
                   <LocalizedClientLink
                     className="hover:text-ui-fg-base"
+                    href="/returns"
+                  >
+                    Đổi trả & an toàn
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink
+                    className="hover:text-ui-fg-base"
                     href="/support"
                   >
                     Liên hệ hỗ trợ
