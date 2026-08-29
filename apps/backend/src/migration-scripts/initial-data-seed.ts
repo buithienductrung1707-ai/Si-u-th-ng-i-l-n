@@ -2,6 +2,7 @@ import { MedusaContainer } from "@medusajs/framework";
 import {
   ContainerRegistrationKeys,
   ModuleRegistrationName,
+  Modules,
   ProductStatus,
 } from "@medusajs/framework/utils";
 import {
@@ -124,6 +125,15 @@ export default async function initialDataSeed({
           },
         },
       ],
+    },
+  });
+
+  await link.create({
+    [Modules.STOCK_LOCATION]: {
+      stock_location_id: stockLocation.id,
+    },
+    [Modules.FULFILLMENT]: {
+      fulfillment_provider_id: "manual_manual",
     },
   });
 
