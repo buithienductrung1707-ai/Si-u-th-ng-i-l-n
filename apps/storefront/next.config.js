@@ -13,11 +13,6 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
  */
 const nextConfig = {
   reactStrictMode: true,
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -26,6 +21,7 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    qualities: [50],
     remotePatterns: [
       {
         protocol: "http",

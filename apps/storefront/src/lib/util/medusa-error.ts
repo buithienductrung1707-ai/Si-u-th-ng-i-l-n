@@ -9,14 +9,22 @@ type MedusaError = {
   config?: { url: string; baseURL: string }
 }
 
+const shouldLogMedusaErrors =
+  process.env.NEXT_PUBLIC_MEDUSA_DEBUG === "true"
+
 export default function medusaError(error: unknown): never {
   const err = error as MedusaError
   if (err.response) {
-    const u = new URL(err.config?.url ?? "", err.config?.baseURL ?? "")
-    console.error("Resource:", u.toString())
-    console.error("Response data:", err.response.data)
-    console.error("Status code:", err.response.status)
-    console.error("Headers:", err.response.headers)
+    if (shouldLogMedusaErrors) {
+      const resource = new URL(
+        err.config?.url ?? "/",
+        err.config?.baseURL ?? "http://localhost"
+      ).pathname
+      console.error("Medusa request failed:", {
+        resource,
+        status: err.response.status,
+      })
+    }
 
     const data = err.response.data
     const message =
