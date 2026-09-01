@@ -9,9 +9,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       DATABASE_URL: postgresql://medusa:local@localhost:5432/medusa
       REDIS_URL: redis://localhost:6379
@@ -38,6 +43,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm audit --prod --audit-level=high
       - run: pnpm --filter @dtc/backend run lint
       - run: pnpm --filter @dtc/backend exec tsc --noEmit --pretty false
       - run: pnpm --filter @dtc/storefront run build

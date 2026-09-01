@@ -92,6 +92,7 @@ Checklist vận hành, deploy và các giới hạn trước mở bán nằm t�
 ## Tài liệu kỹ thuật
 
 - [Quy ước phát triển](docs/DEVELOPMENT.md)
+- [Bảo mật dependency và CI](docs/SECURITY.md)
 - [Vận hành cục bộ](docs/OPERATIONS.md)
 - [Triển khai](docs/DEPLOYMENT.md)
 - [Chuẩn bị VNPAY](docs/VNPAY_READINESS.md)
