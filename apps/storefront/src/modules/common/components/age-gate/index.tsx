@@ -30,7 +30,7 @@ export default function AgeGate() {
     >
       <section className="w-full max-w-md rounded-3xl bg-white p-7 text-center shadow-2xl sm:p-10">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-700">
-          Lặng Store
+          TC Store
         </p>
         <h1
           id="age-gate-title"
@@ -42,8 +42,8 @@ export default function AgeGate() {
           id="age-gate-description"
           className="mt-4 text-sm leading-6 text-slate-600"
         >
-          Bằng việc tiếp tục, bạn tự xác nhận đã đủ 18 tuổi. Lặng không yêu cầu
-          ngày sinh hay giấy tờ nhận dạng cho bước này.
+          Bằng việc tiếp tục, bạn tự xác nhận đã đủ 18 tuổi. TC Store không yêu
+          cầu ngày sinh hay giấy tờ nhận dạng cho bước này.
         </p>
         <button
           type="button"

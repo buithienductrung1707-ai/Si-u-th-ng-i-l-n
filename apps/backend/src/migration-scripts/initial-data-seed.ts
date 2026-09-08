@@ -110,18 +110,18 @@ export default async function initialDataSeed({
   );
 
   if (hasCompleteSeed) {
-    logger.info("Lặng Store seed already exists; skipping duplicate creation.");
+    logger.info("TC Store seed already exists; skipping duplicate creation.");
     return;
   }
 
   if (existingProducts.length > 0) {
     throw new MedusaError(
       MedusaError.Types.INVALID_DATA,
-      "Lặng Store seed is incomplete: existing products were found, but not the complete expected catalog. Repair the local database before re-running the seed.",
+      "TC Store seed is incomplete: existing products were found, but not the complete expected catalog. Repair the local database before re-running the seed.",
     );
   }
 
-  logger.info("Seeding Lặng Store data...");
+  logger.info("Seeding TC Store data...");
 
   const {
     result: [salesChannel],
@@ -129,7 +129,7 @@ export default async function initialDataSeed({
     input: {
       salesChannelsData: [
         {
-          name: "Kênh bán lẻ Lặng",
+          name: "Kênh bán lẻ TC Store",
           description: "Cửa hàng chăm sóc cá nhân tại Việt Nam",
         },
       ],
@@ -142,7 +142,7 @@ export default async function initialDataSeed({
     input: {
       api_keys: [
         {
-          title: "Lặng Storefront Publishable API Key",
+          title: "TC Storefront Publishable API Key",
           type: "publishable",
           created_by: "seed",
         },
@@ -161,7 +161,7 @@ export default async function initialDataSeed({
     input: {
       stores: [
         {
-          name: "Lặng Store",
+          name: "TC Store",
           default_sales_channel_id: salesChannel.id,
           supported_currencies: [
             {
@@ -204,7 +204,7 @@ export default async function initialDataSeed({
     input: {
       locations: [
         {
-          name: "Kho phân phối Lặng",
+          name: "Kho phân phối TC Store",
           address: {
             address_1: "Hồ Chí Minh",
             city: "Hồ Chí Minh",
@@ -415,5 +415,5 @@ export default async function initialDataSeed({
     },
   });
 
-  logger.info("Lặng Store seed complete.");
+  logger.info("TC Store seed complete.");
 }

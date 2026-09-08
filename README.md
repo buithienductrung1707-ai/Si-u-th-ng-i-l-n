@@ -1,4 +1,4 @@
-# Lặng Store
+# TC Store
 
 Storefront thương mại điện tử tiếng Việt cho sản phẩm chăm sóc sức khỏe tình dục người lớn. Dự án được xây dựng độc lập với thương hiệu, nội dung và hình ảnh riêng; không sao chép mã nguồn, nội dung hoặc tài sản từ website tham chiếu.
 

@@ -129,7 +129,7 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         />
                       </div>
                       <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} Lặng. Mua sắm riêng tư.
+                        © {new Date().getFullYear()} TC Store. Mua sắm riêng tư.
                       </Text>
                     </div>
                   </div>

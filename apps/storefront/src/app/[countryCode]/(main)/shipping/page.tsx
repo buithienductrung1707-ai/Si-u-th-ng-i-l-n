@@ -2,14 +2,14 @@ import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Giao hàng kín đáo",
-  description: "Thông tin giao hàng và đóng gói trung tính tại Lặng Store.",
+  description: "Thông tin giao hàng và đóng gói trung tính tại TC Store.",
 }
 
 export default function ShippingPage() {
   return (
     <article className="content-container max-w-3xl py-14 small:py-20">
       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-        Lặng Store
+        TC Store
       </p>
       <h1 className="mt-4 text-4xl font-semibold text-slate-950">
         Giao hàng kín đáo
@@ -40,8 +40,8 @@ export default function ShippingPage() {
           <p className="mt-2">
             Môi trường hiện tại chỉ dùng nhà cung cấp thanh toán hệ thống để
             kiểm tra kỹ thuật và không nhận thanh toán thật. Các phương thức
-            thanh toán được phê duyệt sẽ hiển thị rõ tại checkout trước khi
-            cửa hàng chính thức mở bán.
+            thanh toán được phê duyệt sẽ hiển thị rõ tại checkout trước khi cửa
+            hàng chính thức mở bán.
           </p>
         </section>
       </div>

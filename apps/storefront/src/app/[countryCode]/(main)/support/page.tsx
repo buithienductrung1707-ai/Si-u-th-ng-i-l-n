@@ -2,14 +2,14 @@ import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Hỗ trợ kín đáo",
-  description: "Kênh hỗ trợ và quy trình chăm sóc khách hàng của Lặng Store.",
+  description: "Kênh hỗ trợ và quy trình chăm sóc khách hàng của TC Store.",
 }
 
 export default function SupportPage() {
   return (
     <article className="content-container max-w-3xl py-14 small:py-20">
       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-        Lặng Store
+        TC Store
       </p>
       <h1 className="mt-4 text-4xl font-semibold text-slate-950">
         Hỗ trợ kín đáo

@@ -2,7 +2,7 @@ import InteractiveLink from "@modules/common/components/interactive-link"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Không tìm thấy trang | Lặng Store",
+  title: "Không tìm thấy trang | TC Store",
   description: "Trang bạn yêu cầu không tồn tại hoặc đã được di chuyển.",
 }
 

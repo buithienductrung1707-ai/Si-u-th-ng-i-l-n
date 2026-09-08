@@ -38,7 +38,7 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
           "w-[290px]": size === "medium",
           "w-[440px]": size === "large",
           "w-full": size === "full",
-        }
+        },
       )}
       data-testid={dataTestid}
     >
@@ -54,7 +54,7 @@ const ImageOrPlaceholder = ({
   return image ? (
     <Image
       src={image}
-      alt="Ảnh sản phẩm Lặng"
+      alt="Ảnh sản phẩm TC Store"
       className="absolute inset-0 object-cover object-center"
       draggable={false}
       quality={50}

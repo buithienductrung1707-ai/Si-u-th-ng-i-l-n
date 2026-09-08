@@ -15,15 +15,15 @@ const FALLBACK_PRODUCT_IMAGE: HttpTypes.StoreProductImage = {
 
 function createProductJsonLd(
   product: HttpTypes.StoreProduct,
-  countryCode: string
+  countryCode: string,
 ) {
   const url = new URL(
     `/${countryCode}/products/${product.handle}`,
-    getBaseURL()
+    getBaseURL(),
   ).toString()
   const image = new URL(
     product.thumbnail ?? FALLBACK_PRODUCT_IMAGE.url,
-    getBaseURL()
+    getBaseURL(),
   ).toString()
   const price = getProductPrice({ product }).cheapestPrice
 
@@ -37,7 +37,7 @@ function createProductJsonLd(
     sku: product.variants?.[0]?.sku ?? undefined,
     brand: {
       "@type": "Brand",
-      name: "Lặng Store",
+      name: "TC Store",
     },
     ...(price
       ? {
@@ -59,7 +59,7 @@ type Props = {
 
 function getImagesForVariant(
   product: HttpTypes.StoreProduct,
-  selectedVariantId?: string
+  selectedVariantId?: string,
 ) {
   if (!selectedVariantId || !product.variants) {
     return product.images?.length ? product.images : [FALLBACK_PRODUCT_IMAGE]
@@ -94,10 +94,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${product.title} | Lặng`,
+    title: `${product.title} | TC Store`,
     description: product.description ?? product.title,
     openGraph: {
-      title: `${product.title} | Lặng`,
+      title: `${product.title} | TC Store`,
       description: product.description ?? product.title,
       images: [product.thumbnail ?? FALLBACK_PRODUCT_IMAGE.url],
     },

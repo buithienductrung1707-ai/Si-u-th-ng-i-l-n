@@ -2,14 +2,14 @@ import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Chính sách riêng tư",
-  description: "Cách Lặng Store xử lý tối thiểu dữ liệu cần cho đơn hàng.",
+  description: "Cách TC Store xử lý tối thiểu dữ liệu cần cho đơn hàng.",
 }
 
 export default function PrivacyPage() {
   return (
     <article className="content-container max-w-3xl py-14 small:py-20">
       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-        Lặng Store
+        TC Store
       </p>
       <h1 className="mt-4 text-4xl font-semibold text-slate-950">
         Chính sách riêng tư

@@ -6,20 +6,20 @@ import "styles/globals.css"
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
   title: {
-    default: "Lặng — Không gian riêng tư",
-    template: "%s | Lặng",
+    default: "TC Store — Không gian riêng tư",
+    template: "%s | TC Store",
   },
   description:
     "Không gian mua sắm riêng tư với đóng gói kín đáo và hỗ trợ tận tâm.",
   openGraph: {
-    title: "Lặng — Không gian riêng tư",
+    title: "TC Store — Không gian riêng tư",
     description:
       "Sản phẩm chăm sóc cá nhân với giao hàng kín đáo và thông tin minh bạch.",
     images: ["/assets/lang-wellness-hero.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lặng — Không gian riêng tư",
+    title: "TC Store — Không gian riêng tư",
     description: "Chăm sóc bản thân, theo cách thật riêng tư.",
     images: ["/assets/lang-wellness-hero.png"],
   },
