@@ -11,17 +11,25 @@ Repository chuẩn: `main` của `buithienductrung1707-ai/Si-u-th-ng-i-l-n`
 - Giai đoạn 0: chuẩn hóa repository, README, quy ước LF, private packages và loại build cache khỏi Git.
 - Giai đoạn 1: Dependabot, dependency audit chỉ-đọc, quality gate CI và lockfile pnpm 10.11.1.
 - Giai đoạn 2: seed có guard idempotent theo catalog, helper giá VND và smoke test commerce.
-- Audit production: 0 high/critical; còn 2 moderate (`ajv`, `uuid`) để xử lý cùng đợt nâng Medusa có kiểm thử.
+- Audit production: không còn advisory ở mức moderate trở lên sau các override có phạm vi.
 - Xác nhận backend lint không lỗi, type-check backend/storefront đạt và production build storefront đạt.
+- Giai đoạn 3: đã thêm HTTP smoke test cho catalog, payment providers, cart và shipping options; chỉ chạy với khóa local do người vận hành cung cấp, không gọi VNPAY.
 
-Mốc Git trước phiên này: `eff096a docs: save next session handoff`
+Mốc Git trước phiên này: `57c16c8 feat: make commerce seed idempotent`
 
-## Việc tiếp theo — Giai đoạn 3
+## Đã hoàn tất — Giai đoạn 3
 
-1. Hoàn thiện smoke test HTTP cho endpoint storefront, bên cạnh smoke test module hiện có.
-2. Xử lý hai advisory moderate (`ajv`, `uuid`) trong một PR dependency riêng có regression test.
-3. Bổ sung test checkout/cart có payment provider giả lập, không bật thanh toán thật.
-4. Rà soát logging, rate limit và các header bảo mật trước khi chuẩn bị staging.
+- HTTP smoke test đã sẵn sàng qua `pnpm test:http-smoke`.
+- Audit production với ngưỡng moderate đạt 0 advisory; CI đã dùng cùng ngưỡng.
+- Đã bật lại lint/type-check trong production build storefront và sửa các lỗi tồn đọng.
+- Commerce module smoke test đạt với 1 region, 4 products và 2 shipping options.
+
+## Việc tiếp theo — Giai đoạn 4
+
+1. Chạy HTTP smoke test trong môi trường local/staging với publishable key không chứa dữ liệu thật.
+2. Rà soát logging, rate limit, CORS và security headers theo domain staging.
+3. Hoàn thiện cấu hình payment sandbox và webhook signature trước khi cân nhắc VNPAY.
+4. Chuẩn bị checklist staging, backup database và quy trình rollback.
 
 ## Cách bắt đầu phiên sau
 

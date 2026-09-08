@@ -8,3 +8,10 @@ overrides:
   "lodash": 4.18.1
   "postcss": 8.5.23
   "sharp": 0.35.0
+  "qs": 6.16.0
+  "@rushstack/node-core-library>ajv": 8.20.0
+  "ajv-draft-04>ajv": 8.20.0
+  "ajv-formats>ajv": 8.20.0
+  "bullmq>uuid": 11.1.1
+  "express>qs": 6.16.0
+  "body-parser>qs": 6.16.0

@@ -2,7 +2,7 @@
 
 ## Cổng kiểm tra
 
-Mọi push và pull request vào `main` chạy quality check với install từ lockfile, audit dependency production ở ngưỡng `high`, lint/type-check backend và build storefront. Job có quyền chỉ đọc, timeout và hủy các lần chạy cũ cùng ref.
+Mọi push và pull request vào `main` chạy quality check với install từ lockfile, audit dependency production ở ngưỡng `moderate`, lint/type-check backend và build storefront. Job có quyền chỉ đọc, timeout và hủy các lần chạy cũ cùng ref.
 
 Workflow audit hàng tuần cũng chỉ có quyền đọc. Nó thay thế updater Medusa cũ vì updater đó có quyền ghi repository và phụ thuộc vào secret Anthropic; không chạy tự động cập nhật framework hay tạo pull request có đặc quyền.
 
@@ -17,4 +17,14 @@ Dependabot của GitHub tạo tối đa ba pull request cập nhật dependency 
 
 ## Phạm vi hiện tại
 
-Các override `postcss`, `sharp` và `lodash` vá các advisory đã biết mà không nâng major của Next.js hoặc Medusa. Các dependency Medusa được giữ theo cùng phiên bản `2.19.0` và sẽ được nâng theo một pull request riêng có kiểm thử tích hợp.
+Các override có phạm vi parent cho `ajv`, `uuid`, `qs`, cùng `postcss`, `sharp` và `lodash`, vá các advisory đã biết mà không nâng major của Next.js hoặc Medusa. Các dependency Medusa được giữ theo cùng phiên bản `2.19.0` và sẽ được nâng theo một pull request riêng có kiểm thử tích hợp.
+
+## Smoke HTTP và checkout local
+
+Sau khi backend, PostgreSQL, Redis và storefront local đang chạy, cung cấp publishable key qua biến môi trường tạm thời rồi chạy:
+
+```bash
+MEDUSA_PUBLISHABLE_KEY=pk_local pnpm test:http-smoke
+```
+
+Script kiểm tra storefront `/vn`, region Việt Nam/VND, catalog, payment provider hệ thống, tạo cart thử nghiệm và shipping options. Script không hoàn tất đơn, không gọi VNPAY và không ghi key vào log. Payment provider local chỉ dùng để kiểm tra luồng checkout; credentials thật vẫn bị vô hiệu hóa.
