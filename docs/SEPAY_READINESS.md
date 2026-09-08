@@ -25,4 +25,16 @@ Provider tạo mã tham chiếu từ `session_id`, trả thông tin tài khoản
 - Bật retry/monitoring của SePay; lưu `id` giao dịch làm khóa chống trùng ở lớp xử lý đơn hàng.
 - Không dùng webhook không xác thực hoặc HTTP production.
 
+## Smoke test local/staging
+
+Sau khi backend chạy với SePay bật, tạo session thanh toán thử rồi chạy:
+
+```bash
+SEPAY_WEBHOOK_SECRET=<secret không commit> \
+SEPAY_SESSION_ID=<payment-session-id> \
+pnpm test:sepay-webhook
+```
+
+Script chỉ gửi payload TestBank giả lập, in status HTTP và không in secret. Không chạy script này với tài khoản ngân hàng live nếu chưa được phê duyệt.
+
 Chỉ bật live sau khi SePay và ngân hàng xác nhận chấp nhận danh mục sản phẩm, thông tin pháp lý, hoàn tiền và đối soát. Test mode không dùng tiền thật.
