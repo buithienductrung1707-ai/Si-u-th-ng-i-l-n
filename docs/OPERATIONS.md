@@ -2,7 +2,7 @@
 
 ## Mô hình thanh toán và giao hàng
 
-Môi trường mẫu chỉ dùng nhà cung cấp hệ thống của Medusa để kiểm tra kỹ thuật. Trước khi nhận đơn thật, thay thế bằng các adapter đã được đối tác phê duyệt cho thanh toán và vận chuyển. Không lưu thông tin thẻ, mã OTP hoặc ảnh giấy tờ trong Medusa.
+Môi trường mẫu chỉ dùng nhà cung cấp hệ thống của Medusa để kiểm tra kỹ thuật. SePay QR/chuyển khoản đã có adapter sẵn nhưng chỉ bật sau khi cấu hình HMAC webhook và được ngân hàng/SePay chấp thuận danh mục. Trước khi nhận đơn thật, thay thế bằng các adapter đã được đối tác phê duyệt cho thanh toán và vận chuyển. Không lưu thông tin thẻ, mã OTP hoặc ảnh giấy tờ trong Medusa.
 
 Thiết lập cấu hình bí mật trên nền tảng triển khai, không ghi vào Git:
 

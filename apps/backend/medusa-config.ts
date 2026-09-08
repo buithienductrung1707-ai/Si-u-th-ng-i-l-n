@@ -54,6 +54,7 @@ const requiredProductionSecret = (name: string) => {
 const storeCors = corsOrigins("STORE_CORS", process.env.STORE_CORS);
 const adminCors = corsOrigins("ADMIN_CORS", process.env.ADMIN_CORS);
 const authCors = corsOrigins("AUTH_CORS", process.env.AUTH_CORS);
+const sepayEnabled = process.env.SEPAY_ENABLED === "true";
 
 module.exports = defineConfig({
   projectConfig: {
@@ -67,4 +68,26 @@ module.exports = defineConfig({
       cookieSecret: requiredProductionSecret("COOKIE_SECRET"),
     },
   },
+  modules: [
+    {
+      resolve: "@medusajs/medusa/payment",
+      options: {
+        providers: sepayEnabled
+          ? [
+              {
+                resolve: "./src/modules/sepay",
+                id: "sepay",
+                options: {
+                  webhook_secret: process.env.SEPAY_WEBHOOK_SECRET,
+                  bank_account: process.env.SEPAY_BANK_ACCOUNT,
+                  bank_name: process.env.SEPAY_BANK_NAME,
+                  account_name: process.env.SEPAY_ACCOUNT_NAME,
+                  qr_url_template: process.env.SEPAY_QR_URL_TEMPLATE,
+                },
+              },
+            ]
+          : [],
+      },
+    },
+  ],
 });

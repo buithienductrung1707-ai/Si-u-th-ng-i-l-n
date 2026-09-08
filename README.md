@@ -85,7 +85,7 @@ Không chạy production build của storefront đồng thời với Next develo
 
 ## Thanh toán và vận hành
 
-VNPAY Gateway là hướng tích hợp được chọn nhưng đang tắt: chỉ kích hoạt sau khi có hợp đồng merchant, domain HTTPS, credentials sandbox/production và quy trình kiểm thử webhook riêng. Chi tiết tại [docs/VNPAY_READINESS.md](docs/VNPAY_READINESS.md).
+SePay QR/chuyển khoản là hướng tích hợp chi phí thấp được chọn; provider vẫn tắt cho tới khi có tài khoản nhận tiền, HMAC webhook, domain HTTPS và kiểm thử sandbox. Chi tiết tại [docs/SEPAY_READINESS.md](docs/SEPAY_READINESS.md). VNPAY được giữ làm phương án dự phòng và vẫn tắt.
 
 Checklist vận hành, deploy và các giới hạn trước mở bán nằm tại [docs/OPERATIONS.md](docs/OPERATIONS.md) và [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Không public deploy khi chưa hoàn thành các yêu cầu pháp lý, thanh toán, giao nhận, monitoring và backup.
 
@@ -96,4 +96,5 @@ Checklist vận hành, deploy và các giới hạn trước mở bán nằm t�
 - [Mốc tiếp tục phiên sau](docs/RESUME_NEXT_SESSION.md)
 - [Vận hành cục bộ](docs/OPERATIONS.md)
 - [Triển khai](docs/DEPLOYMENT.md)
-- [Chuẩn bị VNPAY](docs/VNPAY_READINESS.md)
+- [Chuẩn bị SePay](docs/SEPAY_READINESS.md)
+- [Chuẩn bị VNPAY dự phòng](docs/VNPAY_READINESS.md)

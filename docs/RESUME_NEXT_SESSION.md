@@ -24,12 +24,13 @@ Mốc Git trước phiên này: `57c16c8 feat: make commerce seed idempotent`
 - Đã bật lại lint/type-check trong production build storefront và sửa các lỗi tồn đọng.
 - Commerce module smoke test đạt với 1 region, 4 products và 2 shipping options.
 - Giai đoạn 4: backend fail-closed CORS/secret ở production, runtime config check, security checklist staging và rollback đã được bổ sung.
+- Giai đoạn 4 tiếp tục: SePay QR/chuyển khoản đã được tích hợp có điều kiện, HMAC webhook và UI hướng dẫn thanh toán; VNPAY giữ ở trạng thái dự phòng/tắt.
 
 ## Việc tiếp theo — Giai đoạn 4
 
 1. Chạy HTTP smoke test trong môi trường staging với publishable key không chứa dữ liệu thật.
 2. Cấu hình rate limit ở reverse proxy và xác nhận security headers theo domain staging.
-3. Hoàn thiện cấu hình payment sandbox và webhook signature trước khi cân nhắc VNPAY.
+3. Cấu hình SePay Test mode, kiểm thử webhook replay/trùng giao dịch và xác nhận merchant acceptance.
 4. Chạy diễn tập backup/restore và rollback trước khi mở traffic.
 
 ## Cách bắt đầu phiên sau
