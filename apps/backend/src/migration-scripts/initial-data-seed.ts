@@ -35,6 +35,11 @@ type SeedProductDefinition = {
 
 const vnd = (amount: number) => amount;
 
+const paymentProviders =
+  process.env.SEPAY_ENABLED === "true"
+    ? ["pp_system_default", "pp_sepay_sepay"]
+    : ["pp_system_default"];
+
 const seedProductDefinitions: SeedProductDefinition[] = [
   {
     title: "Bộ chăm sóc thư giãn hằng ngày",
@@ -178,7 +183,7 @@ export default async function initialDataSeed({
           name: "Việt Nam",
           currency_code: "vnd",
           countries: ["vn"],
-          payment_providers: ["pp_system_default"],
+          payment_providers: paymentProviders,
         },
       ],
     },

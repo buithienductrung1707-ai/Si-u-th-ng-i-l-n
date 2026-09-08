@@ -45,6 +45,20 @@ if (process.env.VNPAY_ENABLED === "true") {
   );
 }
 
+if (process.env.SEPAY_ENABLED === "true") {
+  for (const name of [
+    "SEPAY_WEBHOOK_SECRET",
+    "SEPAY_BANK_ACCOUNT",
+    "SEPAY_BANK_NAME",
+    "SEPAY_ACCOUNT_NAME",
+    "SEPAY_QR_URL_TEMPLATE",
+  ]) {
+    if (!process.env[name]) {
+      errors.push(`${name} is required when SePay is enabled`);
+    }
+  }
+}
+
 if (errors.length) {
   console.error(
     `Runtime production config check failed (${errors.length} issue(s)).`,
