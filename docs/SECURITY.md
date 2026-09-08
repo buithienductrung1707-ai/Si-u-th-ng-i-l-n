@@ -28,3 +28,7 @@ MEDUSA_PUBLISHABLE_KEY=pk_local pnpm test:http-smoke
 ```
 
 Script kiểm tra storefront `/vn`, region Việt Nam/VND, catalog, payment provider hệ thống, tạo cart thử nghiệm và shipping options. Script không hoàn tất đơn, không gọi VNPAY và không ghi key vào log. Payment provider local chỉ dùng để kiểm tra luồng checkout; credentials thật vẫn bị vô hiệu hóa.
+
+## Kiểm tra runtime production
+
+`pnpm test:runtime-config` kiểm tra CORS explicit HTTPS, độ dài secret tối thiểu và đảm bảo VNPAY chưa được bật. Script chỉ báo tên biến lỗi, không in giá trị secret. Ở staging/production, chạy với `RUNTIME_CONFIG_ENV=production` sau khi secret manager đã inject biến môi trường.
