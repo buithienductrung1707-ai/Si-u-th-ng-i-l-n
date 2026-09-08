@@ -31,19 +31,43 @@ const products = [
   },
 ]
 
-const FallbackCatalog = () => {
+type FallbackCatalogProps = {
+  mode?: "home" | "store"
+}
+
+const FallbackCatalog = ({ mode = "home" }: FallbackCatalogProps) => {
+  const isStore = mode === "store"
+
   return (
-    <section className="relative overflow-hidden bg-[#f8f3ef] py-20 small:py-28">
-      <div className="absolute left-0 top-0 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e8c9ba]/50 blur-3xl" />
-      <div className="content-container relative">
+    <section
+      className={
+        isStore
+          ? "rounded-[1.5rem] border border-[#eadeda] bg-white p-6 shadow-[0_10px_28px_rgba(58,21,34,0.05)]"
+          : "relative overflow-hidden bg-[#f8f3ef] py-20 small:py-28"
+      }
+    >
+      {!isStore && (
+        <div className="absolute left-0 top-0 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e8c9ba]/50 blur-3xl" />
+      )}
+      <div className={isStore ? "" : "content-container relative"}>
         <div className="flex flex-col justify-between gap-6 small:flex-row small:items-end">
           <div className="max-w-xl">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8c3851]">
-              Curated for your quiet moments
+              {isStore
+                ? "Danh mục đang được đồng bộ"
+                : "Curated for your quiet moments"}
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-none tracking-[-0.04em] text-[#281017] small:text-6xl">
-              Chọn một điều vừa vặn cho hôm nay.
+              {isStore
+                ? "Những lựa chọn vừa vặn vẫn ở đây."
+                : "Chọn một điều vừa vặn cho hôm nay."}
             </h2>
+            {isStore && (
+              <p className="mt-4 max-w-lg text-base leading-7 text-[#735a62]">
+                Trong khi danh mục đầy đủ hoàn tất đồng bộ, bạn vẫn có thể xem
+                các lựa chọn phổ biến và nhận tư vấn kín đáo.
+              </p>
+            )}
           </div>
           <LocalizedClientLink
             href="/support"

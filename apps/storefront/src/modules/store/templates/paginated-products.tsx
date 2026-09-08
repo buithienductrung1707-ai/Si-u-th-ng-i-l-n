@@ -1,6 +1,7 @@
 import { listProductsWithSort } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { OptionValueIds } from "@lib/util/product-option-filters"
+import FallbackCatalog from "@modules/home/components/fallback-catalog"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
@@ -33,7 +34,7 @@ export default async function PaginatedProducts({
   optionValueIds?: OptionValueIds
 }) {
   const queryParams: PaginatedProductsParams = {
-    limit: 12,
+    limit: PRODUCT_LIMIT,
   }
 
   if (collectionId) {
@@ -52,45 +53,51 @@ export default async function PaginatedProducts({
     queryParams["order"] = "created_at"
   }
 
-  const region = await getRegion(countryCode)
+  try {
+    const region = await getRegion(countryCode)
 
-  if (!region) {
-    return null
-  }
+    if (!region) {
+      return <FallbackCatalog mode="store" />
+    }
 
-  const {
-    response: { products, count },
-  } = await listProductsWithSort({
-    page,
-    queryParams,
-    sortBy,
-    countryCode,
-    optionValueIds,
-  })
+    const {
+      response: { products, count },
+    } = await listProductsWithSort({
+      page,
+      queryParams,
+      sortBy,
+      countryCode,
+      optionValueIds,
+    })
 
-  const totalPages = Math.ceil(count / PRODUCT_LIMIT)
+    if (!products.length) {
+      return <FallbackCatalog mode="store" />
+    }
 
-  return (
-    <>
-      <ul
-        className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8"
-        data-testid="products-list"
-      >
-        {products.map((p) => {
-          return (
-            <li key={p.id}>
-              <ProductPreview product={p} region={region} />
+    const totalPages = Math.ceil(count / PRODUCT_LIMIT)
+
+    return (
+      <>
+        <ul
+          className="grid w-full grid-cols-2 gap-x-4 gap-y-6 small:grid-cols-3 small:gap-x-6 small:gap-y-8 medium:grid-cols-4"
+          data-testid="products-list"
+        >
+          {products.map((product) => (
+            <li key={product.id}>
+              <ProductPreview product={product} region={region} />
             </li>
-          )
-        })}
-      </ul>
-      {totalPages > 1 && (
-        <Pagination
-          data-testid="product-pagination"
-          page={page}
-          totalPages={totalPages}
-        />
-      )}
-    </>
-  )
+          ))}
+        </ul>
+        {totalPages > 1 && (
+          <Pagination
+            data-testid="product-pagination"
+            page={page}
+            totalPages={totalPages}
+          />
+        )}
+      </>
+    )
+  } catch {
+    return <FallbackCatalog mode="store" />
+  }
 }
