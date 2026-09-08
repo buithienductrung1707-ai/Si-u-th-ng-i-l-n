@@ -3,6 +3,7 @@ import {
   ContainerRegistrationKeys,
   ModuleRegistrationName,
   Modules,
+  MedusaError,
   ProductStatus,
 } from "@medusajs/framework/utils";
 import {
@@ -22,6 +23,61 @@ import {
   linkSalesChannelsToStockLocationWorkflow,
 } from "@medusajs/medusa/core-flows";
 
+type SeedProductDefinition = {
+  title: string;
+  handle: string;
+  description: string;
+  category: string;
+  collection: string;
+  sku: string;
+  price: number;
+};
+
+const vnd = (amount: number) => amount;
+
+const seedProductDefinitions: SeedProductDefinition[] = [
+  {
+    title: "Bộ chăm sóc thư giãn hằng ngày",
+    handle: "bo-cham-soc-thu-gian-hang-ngay",
+    description:
+      "Bộ sản phẩm tối giản cho khoảng thời gian chăm sóc riêng tư, phù hợp nhịp sống bận rộn.",
+    category: "Chăm sóc cá nhân",
+    collection: "thiet-yeu-hang-ngay",
+    sku: "LANG-CARE-001",
+    price: vnd(289000),
+  },
+  {
+    title: "Thiết bị massage cá nhân Mini",
+    handle: "thiet-bi-massage-ca-nhan-mini",
+    description:
+      "Thiết kế nhỏ gọn, thao tác đơn giản và dễ cất giữ; hướng đến cảm giác thư giãn cá nhân.",
+    category: "Massage thư giãn",
+    collection: "khoanh-khac-thu-gian",
+    sku: "LANG-MASSAGE-001",
+    price: vnd(459000),
+  },
+  {
+    title: "Gel gốc nước dịu nhẹ",
+    handle: "gel-goc-nuoc-diu-nhe",
+    description:
+      "Kết cấu gốc nước, không mùi, thông tin thành phần minh bạch để bạn chủ động lựa chọn.",
+    category: "Gel & phụ kiện",
+    collection: "thiet-yeu-hang-ngay",
+    sku: "LANG-GEL-001",
+    price: vnd(149000),
+  },
+  {
+    title: "Hộp quà riêng tư",
+    handle: "hop-qua-rieng-tu",
+    description:
+      "Một lựa chọn quà tặng tinh tế với thông điệp kín đáo, để trao đi sự quan tâm theo cách của bạn.",
+    category: "Quà tặng riêng tư",
+    collection: "khoanh-khac-thu-gian",
+    sku: "LANG-GIFT-001",
+    price: vnd(359000),
+  },
+];
+
 export default async function initialDataSeed({
   container,
 }: {
@@ -33,6 +89,32 @@ export default async function initialDataSeed({
   const fulfillmentModuleService = container.resolve(
     ModuleRegistrationName.FULFILLMENT,
   );
+
+  const { data: existingProducts } = await query.graph({
+    entity: "product",
+    fields: ["id", "handle"],
+  });
+  const existingHandles = new Set(
+    existingProducts.map((product) => product.handle),
+  );
+  const expectedHandles = seedProductDefinitions.map(
+    (product) => product.handle,
+  );
+  const hasCompleteSeed = expectedHandles.every((handle) =>
+    existingHandles.has(handle),
+  );
+
+  if (hasCompleteSeed) {
+    logger.info("Lặng Store seed already exists; skipping duplicate creation.");
+    return;
+  }
+
+  if (existingProducts.length > 0) {
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      "Lặng Store seed is incomplete: existing products were found, but not the complete expected catalog. Repair the local database before re-running the seed.",
+    );
+  }
 
   logger.info("Seeding Lặng Store data...");
 
@@ -186,11 +268,11 @@ export default async function initialDataSeed({
         prices: [
           {
             currency_code: "vnd",
-            amount: 45000,
+            amount: vnd(45000),
           },
           {
             region_id: region.id,
-            amount: 45000,
+            amount: vnd(45000),
           },
         ],
       },
@@ -209,11 +291,11 @@ export default async function initialDataSeed({
         prices: [
           {
             currency_code: "vnd",
-            amount: 30000,
+            amount: vnd(30000),
           },
           {
             region_id: region.id,
-            amount: 30000,
+            amount: vnd(30000),
           },
         ],
       },
@@ -271,48 +353,7 @@ export default async function initialDataSeed({
     collections.map((collection) => [collection.handle, collection.id]),
   );
 
-  const products = [
-    {
-      title: "Bộ chăm sóc thư giãn hằng ngày",
-      handle: "bo-cham-soc-thu-gian-hang-ngay",
-      description:
-        "Bộ sản phẩm tối giản cho khoảng thời gian chăm sóc riêng tư, phù hợp nhịp sống bận rộn.",
-      category: "Chăm sóc cá nhân",
-      collection: "thiet-yeu-hang-ngay",
-      sku: "LANG-CARE-001",
-      price: 289000,
-    },
-    {
-      title: "Thiết bị massage cá nhân Mini",
-      handle: "thiet-bi-massage-ca-nhan-mini",
-      description:
-        "Thiết kế nhỏ gọn, thao tác đơn giản và dễ cất giữ; hướng đến cảm giác thư giãn cá nhân.",
-      category: "Massage thư giãn",
-      collection: "khoanh-khac-thu-gian",
-      sku: "LANG-MASSAGE-001",
-      price: 459000,
-    },
-    {
-      title: "Gel gốc nước dịu nhẹ",
-      handle: "gel-goc-nuoc-diu-nhe",
-      description:
-        "Kết cấu gốc nước, không mùi, thông tin thành phần minh bạch để bạn chủ động lựa chọn.",
-      category: "Gel & phụ kiện",
-      collection: "thiet-yeu-hang-ngay",
-      sku: "LANG-GEL-001",
-      price: 149000,
-    },
-    {
-      title: "Hộp quà riêng tư",
-      handle: "hop-qua-rieng-tu",
-      description:
-        "Một lựa chọn quà tặng tinh tế với thông điệp kín đáo, để trao đi sự quan tâm theo cách của bạn.",
-      category: "Quà tặng riêng tư",
-      collection: "khoanh-khac-thu-gian",
-      sku: "LANG-GIFT-001",
-      price: 359000,
-    },
-  ];
+  const products = seedProductDefinitions;
 
   const { result: createdProducts } = await createProductsWorkflow(
     container,
@@ -336,7 +377,7 @@ export default async function initialDataSeed({
             },
             prices: [
               {
-                amount: product.price,
+                amount: vnd(product.price),
                 currency_code: "vnd",
               },
             ],
