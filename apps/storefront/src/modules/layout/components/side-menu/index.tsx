@@ -7,19 +7,23 @@ import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { Text, clx } from "@modules/common/components/ui"
 import { Fragment } from "react"
+
+import { Locale } from "@lib/data/locales"
 import CountrySelect from "../country-select"
 import LanguageSelect from "../language-select"
-import { Locale } from "@lib/data/locales"
 
-const SideMenuItems = {
-  "Trang chủ": "/",
-  "Sản phẩm": "/store",
-  "Tài khoản": "/account",
-  "Giỏ hàng": "/cart",
-  "Giao hàng kín đáo": "/shipping",
-  "Đổi trả & an toàn": "/returns",
-  "Chính sách riêng tư": "/privacy",
-}
+const primaryMenuItems = [
+  { name: "Trang chủ", href: "/" },
+  { name: "Sản phẩm", href: "/store" },
+  { name: "Tài khoản", href: "/account" },
+  { name: "Giỏ hàng", href: "/cart" },
+]
+
+const supportMenuItems = [
+  { name: "Giao hàng kín đáo", href: "/shipping" },
+  { name: "Đổi trả & an toàn", href: "/returns" },
+  { name: "Chính sách riêng tư", href: "/privacy" },
+]
 
 type SideMenuProps = {
   regions: HttpTypes.StoreRegion[] | null
@@ -33,102 +37,146 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
 
   return (
     <div className="h-full">
-      <div className="flex items-center h-full">
-        <Popover className="h-full flex">
+      <div className="flex h-full items-center">
+        <Popover className="flex h-full">
           {({ open, close }) => (
             <>
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-ui-fg-base"
+                  className="relative flex h-full items-center text-sm font-semibold transition hover:text-white focus:outline-none focus:ring-2 focus:ring-[#f4d58d] focus:ring-inset"
                 >
                   Danh mục
                 </Popover.Button>
               </div>
 
-              {open && (
+              <Transition
+                show={open}
+                as={Fragment}
+                enter="transition-opacity duration-200"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
                 <div
-                  className="fixed inset-0 z-[50] bg-black/0 pointer-events-auto"
+                  className="fixed inset-0 z-[50] bg-[#0b0409]/70 backdrop-blur-sm"
                   onClick={close}
                   data-testid="side-menu-backdrop"
                 />
-              )}
+              </Transition>
 
               <Transition
                 show={open}
                 as={Fragment}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0"
-                enterTo="opacity-100 backdrop-blur-2xl"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 backdrop-blur-2xl"
-                leaveTo="opacity-0"
+                enter="transition duration-200 ease-out"
+                enterFrom="-translate-x-full opacity-0"
+                enterTo="translate-x-0 opacity-100"
+                leave="transition duration-150 ease-in"
+                leaveFrom="translate-x-0 opacity-100"
+                leaveTo="-translate-x-full opacity-0"
               >
-                <PopoverPanel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-[51] inset-x-0 text-sm text-ui-fg-on-color m-2 backdrop-blur-2xl">
+                <PopoverPanel className="fixed inset-y-0 left-0 z-[51] flex w-[min(22rem,calc(100vw-1rem))] flex-col overflow-hidden border-r border-white/10 bg-[#180811] text-[#f5e6e9] shadow-[24px_0_60px_rgba(12,3,8,0.45)]">
                   <div
                     data-testid="nav-menu-popup"
-                    className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-rounded justify-between p-6"
+                    className="flex min-h-0 flex-1 flex-col"
                   >
-                    <div className="flex justify-end" id="xmark">
-                      <button data-testid="close-menu-button" onClick={close}>
+                    <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+                      <p className="font-serif text-lg font-semibold tracking-[0.14em] text-[#f4d58d]">
+                        TC STORE
+                      </p>
+                      <button
+                        type="button"
+                        data-testid="close-menu-button"
+                        onClick={close}
+                        aria-label="Đóng danh mục"
+                        className="rounded-full p-2 text-[#f5e6e9] transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#f4d58d]"
+                      >
                         <XMark />
                       </button>
                     </div>
-                    <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
-                        return (
+
+                    <nav
+                      aria-label="Điều hướng chính"
+                      className="min-h-0 flex-1 overflow-y-auto px-4 py-5"
+                    >
+                      <ul className="grid gap-1">
+                        {primaryMenuItems.map(({ name, href }) => (
                           <li key={name}>
                             <LocalizedClientLink
                               href={href}
-                              className="text-3xl leading-10 hover:text-ui-fg-disabled"
+                              className="flex items-center rounded-xl px-4 py-3 text-lg font-semibold tracking-tight transition hover:bg-[#3a1525] hover:text-[#f4d58d] focus:outline-none focus:ring-2 focus:ring-[#f4d58d]"
                               onClick={close}
                               data-testid={`${name.toLowerCase()}-link`}
                             >
                               {name}
                             </LocalizedClientLink>
                           </li>
-                        )
-                      })}
-                    </ul>
-                    <div className="flex flex-col gap-y-6">
-                      {!!locales?.length && (
-                        <div
-                          className="flex justify-between"
-                          onMouseEnter={languageToggleState.open}
-                          onMouseLeave={languageToggleState.close}
-                        >
-                          <LanguageSelect
-                            toggleState={languageToggleState}
-                            locales={locales}
-                            currentLocale={currentLocale}
-                          />
-                          <ArrowRightMini
-                            className={clx(
-                              "transition-transform duration-150",
-                              languageToggleState.state ? "-rotate-90" : "",
-                            )}
-                          />
-                        </div>
-                      )}
-                      <div
-                        className="flex justify-between"
-                        onMouseEnter={countryToggleState.open}
-                        onMouseLeave={countryToggleState.close}
-                      >
-                        {regions && (
-                          <CountrySelect
-                            toggleState={countryToggleState}
-                            regions={regions}
-                          />
+                        ))}
+                      </ul>
+
+                      <div className="my-5 border-t border-white/10" />
+                      <p className="px-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#d8abb7]/60">
+                        Thông tin mua sắm
+                      </p>
+                      <ul className="mt-2 grid gap-1">
+                        {supportMenuItems.map(({ name, href }) => (
+                          <li key={name}>
+                            <LocalizedClientLink
+                              href={href}
+                              className="flex rounded-xl px-4 py-2.5 text-sm leading-5 text-[#f5e6e9]/75 transition hover:bg-[#3a1525] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#f4d58d]"
+                              onClick={close}
+                              data-testid={`${name.toLowerCase()}-link`}
+                            >
+                              {name}
+                            </LocalizedClientLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </nav>
+
+                    <div className="shrink-0 border-t border-white/10 px-6 py-5">
+                      <div className="grid gap-4 text-sm">
+                        {!!locales?.length && (
+                          <div
+                            className="flex items-center justify-between"
+                            onMouseEnter={languageToggleState.open}
+                            onMouseLeave={languageToggleState.close}
+                          >
+                            <LanguageSelect
+                              toggleState={languageToggleState}
+                              locales={locales}
+                              currentLocale={currentLocale}
+                            />
+                            <ArrowRightMini
+                              className={clx(
+                                "transition-transform duration-150",
+                                languageToggleState.state ? "-rotate-90" : "",
+                              )}
+                            />
+                          </div>
                         )}
-                        <ArrowRightMini
-                          className={clx(
-                            "transition-transform duration-150",
-                            countryToggleState.state ? "-rotate-90" : "",
-                          )}
-                        />
+                        {regions && (
+                          <div
+                            className="flex items-center justify-between"
+                            onMouseEnter={countryToggleState.open}
+                            onMouseLeave={countryToggleState.close}
+                          >
+                            <CountrySelect
+                              toggleState={countryToggleState}
+                              regions={regions}
+                            />
+                            <ArrowRightMini
+                              className={clx(
+                                "transition-transform duration-150",
+                                countryToggleState.state ? "-rotate-90" : "",
+                              )}
+                            />
+                          </div>
+                        )}
                       </div>
-                      <Text className="flex justify-between txt-compact-small">
+                      <Text className="mt-5 text-xs text-[#f5e6e9]/50">
                         © {new Date().getFullYear()} TC Store. Mua sắm riêng tư.
                       </Text>
                     </div>
