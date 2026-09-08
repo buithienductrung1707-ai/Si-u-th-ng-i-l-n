@@ -20,13 +20,13 @@ export default async function Footer() {
   }
 
   return (
-    <footer className="border-t border-ui-border-base w-full">
+    <footer className="w-full border-t border-[#4b2031] bg-[#16070d] text-[#ead8de] [&_a]:text-[#ead8de]/70 [&_a]:transition [&_a:hover]:text-[#f4d58d] [&_span]:text-[#ead8de]/75">
       <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
+        <div className="flex flex-col gap-y-10 xsmall:flex-row items-start justify-between py-20 small:py-24">
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+              className="font-serif text-xl font-semibold tracking-[0.16em] text-[#f4d58d] uppercase transition hover:text-white"
             >
               TC Store
             </LocalizedClientLink>
@@ -153,7 +153,7 @@ export default async function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
+        <div className="flex w-full mb-8 justify-between border-t border-white/10 pt-6 text-[#ead8de]/55">
           <Text className="txt-compact-small">
             © {new Date().getFullYear()} TC Store. Mua sắm riêng tư.
           </Text>

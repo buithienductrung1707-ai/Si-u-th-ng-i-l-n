@@ -8,7 +8,7 @@ import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 
 export const metadata: Metadata = {
-  title: "Không gian riêng tư",
+  title: "Private wellness",
   description: "Mua sắm riêng tư với đóng gói kín đáo và thanh toán linh hoạt.",
 }
 
