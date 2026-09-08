@@ -1,5 +1,7 @@
 import { Metadata } from "next"
 
+import InformationPage from "@modules/common/components/information-page"
+
 export const metadata: Metadata = {
   title: "Chính sách riêng tư",
   description: "Cách TC Store xử lý tối thiểu dữ liệu cần cho đơn hàng.",
@@ -7,43 +9,41 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <article className="content-container max-w-3xl py-14 small:py-20">
-      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-700">
-        TC Store
-      </p>
-      <h1 className="mt-4 text-4xl font-semibold text-slate-950">
-        Chính sách riêng tư
-      </h1>
-      <div className="mt-8 space-y-7 text-base leading-7 text-slate-700">
-        <section>
-          <h2 className="text-xl font-semibold text-slate-950">
-            Dữ liệu tối thiểu
-          </h2>
-          <p className="mt-2">
-            Chúng tôi chỉ dùng tên người nhận, số điện thoại và địa chỉ để xử lý
-            giao hàng. Email là tùy chọn cho việc gửi xác nhận và tra cứu đơn.
-          </p>
-        </section>
-        <section>
-          <h2 className="text-xl font-semibold text-slate-950">
-            Không gian 18+
-          </h2>
-          <p className="mt-2">
-            Xác nhận độ tuổi được lưu trên thiết bị của bạn. Bước này không yêu
-            cầu ngày sinh, giấy tờ hay dữ liệu nhận dạng.
-          </p>
-        </section>
-        <section>
-          <h2 className="text-xl font-semibold text-slate-950">
-            Đơn hàng và hỗ trợ
-          </h2>
-          <p className="mt-2">
-            Thông tin đơn hàng chỉ hiển thị cho người sở hữu đơn hoặc quản trị
-            viên được phân quyền. Bạn có thể yêu cầu xem, chỉnh sửa hoặc xóa dữ
-            liệu theo quy trình hỗ trợ khi website vận hành chính thức.
-          </p>
-        </section>
-      </div>
-    </article>
+    <InformationPage
+      eyebrow="TC Store · Privacy"
+      title="Sự riêng tư là một phần của dịch vụ."
+      intro="Chúng tôi thiết kế trải nghiệm mua sắm với nguyên tắc thu thập tối thiểu, dùng đúng mục đích và giao tiếp theo kênh bạn lựa chọn."
+      sections={[
+        {
+          title: "Dữ liệu tối thiểu",
+          body: (
+            <p>
+              Chúng tôi chỉ dùng tên người nhận, số điện thoại và địa chỉ để xử
+              lý giao hàng. Email là tùy chọn cho việc gửi xác nhận và tra cứu
+              đơn.
+            </p>
+          ),
+        },
+        {
+          title: "Không gian 18+",
+          body: (
+            <p>
+              Xác nhận độ tuổi được lưu trên thiết bị của bạn. Bước này không
+              yêu cầu ngày sinh, giấy tờ hay dữ liệu nhận dạng.
+            </p>
+          ),
+        },
+        {
+          title: "Đơn hàng và hỗ trợ",
+          body: (
+            <p>
+              Thông tin đơn hàng chỉ hiển thị cho người sở hữu đơn hoặc quản trị
+              viên được phân quyền. Quy trình xem, chỉnh sửa hoặc xóa dữ liệu sẽ
+              được công bố cùng kênh hỗ trợ chính thức trước khi mở bán.
+            </p>
+          ),
+        },
+      ]}
+    />
   )
 }
