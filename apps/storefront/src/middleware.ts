@@ -107,6 +107,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Early TC Store previews used Medusa's starter default ("dk"). Preserve
+  // links that were redirected to /dk/vn before the Vietnam region existed.
+  if (
+    request.nextUrl.pathname === "/dk/vn" ||
+    request.nextUrl.pathname.startsWith("/dk/vn/")
+  ) {
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = request.nextUrl.pathname.replace(/^\/dk\/vn/, "/vn")
+    return NextResponse.redirect(redirectUrl, 307)
+  }
+
   const cacheIdCookie = request.cookies.get("_medusa_cache_id")
   const cacheId = cacheIdCookie?.value || crypto.randomUUID()
 
